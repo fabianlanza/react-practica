@@ -2,16 +2,23 @@ import { useEffect, useState } from "react"
 
 export function Tiempo(){
 
-    const [datosTiempo, setDatosTiempo] = useState("La Ceiba");
+    const [datosTiempo, setDatosTiempo] = useState(null);
     const [error, setError] = useState (null);
+    const [buscar, setBuscar] = useState("La Ceiba");
     const [cargando, setCargando] = useState (true);
+
+        const controladorInput = (evento) =>{
+        if (evento.key === "Enter") {
+            setBuscar(evento.target.value);
+        }
+    }
     
     useEffect(()=>{
         
         const miTiempo = async () => {
             setCargando(true);
             try {
-                const responder = await fetch ("https://api.weatherapi.com/v1/current.json?key=9c8a160bfd394a3cabd53731252810&q=La Ceiba&aqi=no");
+                const responder = await fetch (`https://api.weatherapi.com/v1/current.json?key=9c8a160bfd394a3cabd53731252810&q=${buscar}&aqi=no`);
                 const datosJson = await responder.json();
                 setDatosTiempo(datosJson);
                 console.log(datosJson);
@@ -23,7 +30,9 @@ export function Tiempo(){
             
         }
         miTiempo();
-    },[]);
+    },[buscar]);
+
+
 
     if (cargando) {
         return <div>Cargando...</div>;
@@ -47,6 +56,7 @@ export function Tiempo(){
                     style={{"width" : "100%", "margin" : "5px", textAlign : "center"}}
                     type = "text"
                     className="card-text mx-auto my-2"
+                    onKeyDown={(e)=>controladorInput(e)}
                 />
             </div>
         </>
