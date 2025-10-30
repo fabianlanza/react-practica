@@ -30,7 +30,6 @@ function App() {
               <Link className="nav-link" to={"/clientes"}>Clientes</Link>
               <Link className="nav-link" to={"/productos"}>Productos</Link>
               <Link className="nav-link" to={"/acercade"}>Acerca de</Link>
-              <Link className="nav-link" to={"/tiempo"}>Tiempo</Link>
             </div>
           </div>
         </div>
