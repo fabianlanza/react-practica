@@ -44,7 +44,7 @@ export function Tiempo(){
                 </div>
 
                 <input
-                    style={{"width" : "300px", "margin" : "5px", textAlign : "center"}}
+                    style={{"width" : "100%", "margin" : "5px", textAlign : "center"}}
                     type = "text"
                     className="card-text mx-auto my-2"
                 />
