@@ -35,7 +35,7 @@ export function Tiempo(){
                     src={datosTiempo.current.condition.icon}
                     className="card-img-top"
                     alt={datosTiempo.current.condition.text}
-                    style={{width:'90px'}}
+                    style={{width:'90px', margin:'auto'}}
                 />
                 <div className="card-body">
                     <h5 className ="card-title">Temperatura: {datosTiempo.current.temp_c} °C</h5>

@@ -33,12 +33,12 @@ export function Usuarios() {
     }
 
     return (
-        <div className="tarjeta-usuario">
-            {
-                usuarios.map((usuario) => {
-                   return <TarjetaUsuario key={usuario.id} usuario={usuario} />
-                })
-            }
-        </div>
+        <div className="tarjeta-contenedor">
+                {
+                    usuarios.map((usuario) => {
+                    return <TarjetaUsuario key={usuario.id} usuario={usuario} />
+                    })
+                }
+            </div>
     );
 }
