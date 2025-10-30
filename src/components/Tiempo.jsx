@@ -39,7 +39,7 @@ export function Tiempo(){
                 />
                 <div className="card-body">
                     <h5 className ="card-title">Temperatura: {datosTiempo.current.temp_c} °C</h5>
-                    <p className ="card-text">Lugar: {datosTiempo.location.name}</p>
+                    <p className ="card-text">Lugar: {datosTiempo.location.name} - {datosTiempo.location.country}</p>
                     <p className ="card-text">Descripcion: {datosTiempo.current.condition.text}</p>
                 </div>
 
