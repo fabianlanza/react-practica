@@ -11,7 +11,7 @@ export function Tiempo(){
         const miTiempo = async () => {
             setCargando(true);
             try {
-                const responder = await fetch ("http://api.weatherapi.com/v1/current.json?key=9c8a160bfd394a3cabd53731252810&q=La Ceiba&aqi=no");
+                const responder = await fetch ("https://api.weatherapi.com/v1/current.json?key=9c8a160bfd394a3cabd53731252810&q=La Ceiba&aqi=no");
                 const datosJson = await responder.json();
                 setDatosTiempo(datosJson);
                 console.log(datosJson);
