@@ -36,10 +36,15 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  /* layout en columna para que el header (navbar) se sitúe en la parte superior
+     y el contenido fluya por debajo. Anteriormente `place-items: center`
+     centraba todo verticalmente, lo que hacía que la barra de navegación
+     apareciera en el medio de la página. */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 h1 {

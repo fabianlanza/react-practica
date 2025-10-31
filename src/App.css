@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+  /* espacio para evitar que la barra de navegación fija cubra la parte superior del contenido de la página */
+/* espacio para evitar que la barra de navegación fija cubra la parte superior del contenido de la página */
+body {
+  padding-top: 4.5rem; /* ajustar si la altura de tu navbar es diferente (por ejemplo, 56px = 3.5rem). */
+}
