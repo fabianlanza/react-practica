@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import './Tiempo.css'
 
 export function Tiempo(){
 
@@ -38,27 +39,31 @@ export function Tiempo(){
         return <div>Cargando...</div>;
     }
     return(
-        <>
-            <div className="card mx-auto" style={{"width" : "320px"}} >
-                <img
-                    src={datosTiempo.current.condition.icon}
-                    className="card-img-top"
-                    alt={datosTiempo.current.condition.text}
-                    style={{width:'90px', margin:'auto'}}
-                />
-                <div className="card-body">
-                    <h5 className ="card-title">Temperatura: {datosTiempo.current.temp_c} °C</h5>
-                    <p className ="card-text">Lugar: {datosTiempo.location.name} - {datosTiempo.location.country}</p>
-                    <p className ="card-text">Descripcion: {datosTiempo.current.condition.text}</p>
-                </div>
+        <div className="contenedorTiempo">
 
                 <input
-                    style={{"width" : "100%", "margin" : "5px", textAlign : "center"}}
+
+                    className='inputBuscar'    
                     type = "text"
-                    className="card-text mx-auto my-2"
+                    placeholder="Buscar Ciudad..."
                     onKeyDown={(e)=>controladorInput(e)}
                 />
+
+            <div className='tarjeta' >
+                <img
+                    src={datosTiempo.current.condition.icon}
+                    // className="card-img-top"
+                    alt={datosTiempo.current.condition.text}
+                    // style={{width:'90px', margin:'auto'}}
+                />
+                <div className="cuerpoTarjeta">
+                    <h1>{datosTiempo.current.temp_c} °C</h1>
+                    <p className="lugar">{datosTiempo.location.name}, {datosTiempo.location.country}</p>
+                    <p>{datosTiempo.current.condition.text}</p>
+                </div>
+
+
             </div>
-        </>
+        </div>
     )
 }
