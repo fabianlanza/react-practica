@@ -9,21 +9,24 @@
     margin-bottom: 40px;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 15px;
     font-size: 16px;
 }
 
 .contenedorTiempo{
+    /* keep large top spacing on wider screens but allow smaller spacing on narrow screens */
     margin-top: 40%;
 }
 
 .tarjeta{
 
     /* margin: auto; */
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
     height: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 30px;
     padding: 20px;
     /* overflow: hidden; */
 }
@@ -45,5 +48,29 @@
 
 .lugar{
     font-weight: bold;
-    font-size: 30px;
+        font-size: 30px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .contenedorTiempo{
+        margin-top: 2rem; /* reduce large top offset on small screens */
+        padding: 0 1rem;
+    }
+    .tarjeta{
+        padding: 14px;
+        border-radius: 18px;
+    }
+    .cuerpoTarjeta{
+        font-size: 24px;
+    }
+    .cuerpoTarjeta p{
+        font-size: 16px;
+    }
+    .lugar{
+        font-size: 20px;
+    }
+    .inputBuscar{
+        margin-bottom: 24px;
+    }
 }
