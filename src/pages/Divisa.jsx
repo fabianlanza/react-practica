@@ -1,20 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography, TextField, MenuItem } from "@mui/material";
 
 export default function Divisa() {
   const [cantidad, setCantidad] = useState(""); //Lo que el usuario ingresa
   const [resultado, setResultado] = useState(0); //El resultado de la conversión
   const [modo, setModo] = useState("usdToLps");
-//   Cambiar fijo por valor de API
-  const valorDolar = 26.23;
+  const [tasaCambio, setTasaCambio] = useState(26.23); // Valor por defecto
+  const [cargando, setCargando] = useState(false);
+
+  const API_KEY = "b2185bdace75fd85292492d0";
+
+  // Llamar API cada vez que cambia el modo de conversión
+  useEffect(() => {
+    const fetchTasaCambio = async () => {
+      setCargando(true);
+      try {
+        // Selecciona la API según el modo
+        const url = modo === "usdToLps" 
+          ? `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/USD/HNL`
+          : `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/HNL/USD`;
+        
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+        
+        if (datos.result === "success") {
+          setTasaCambio(datos.conversion_rate);
+          
+          // Reconvertir si ya hay una cantidad ingresada
+          const numero = parseFloat(cantidad);
+          if (!isNaN(numero) && numero > 0) {
+            setResultado(numero * datos.conversion_rate);
+          }
+        }
+      } catch (error) {
+        console.error("Error al obtener la tasa de cambio:", error);
+      } finally {
+        setCargando(false);
+      }
+    };
+    
+    fetchTasaCambio();
+  }, [modo]); // Se ejecuta cada vez que cambia el modo
+
+
 
   // Función para convertir la moneda
-  const convertir = (valor, modoActual) => {
-    if (modoActual === "usdToLps") {
-      setResultado(valor * valorDolar);
-    } else {
-      setResultado(valor / valorDolar);
-    }
+  const convertir = (valor) => {
+    setResultado(valor * tasaCambio);
   };
 
   // Maneja el cambio en el campo de cantidad
@@ -23,8 +55,8 @@ export default function Divisa() {
     setCantidad(valor);
 
     const numero = parseFloat(valor);
-    if (!isNaN(numero)) {
-      convertir(numero, modo);
+    if (!isNaN(numero) && numero > 0) {
+      convertir(numero);
     } else {
       setResultado(0);
     }
@@ -32,17 +64,8 @@ export default function Divisa() {
 
   // Función que se llama cada vez que el usuario cambia el tipo de conversión
   const handleChangeModo = (e) => {
-    const nuevoModo = e.target.value; // Guardamos el modo seleccionado
-    setModo(nuevoModo); // Actualizamos el estado "modo"
-
-    // parseFloat convierte la cadena a número decimal
-    const numero = parseFloat(cantidad);
-    // Si el valor es un número válido, realiza la conversión
-    if (!isNaN(numero)) {
-      convertir(numero, nuevoModo);
-    } else {
-      setResultado(0);
-    }
+    const nuevoModo = e.target.value;
+    setModo(nuevoModo); // Esto dispara el useEffect que obtiene la nueva tasa
   };
 
   return (
@@ -71,20 +94,31 @@ export default function Divisa() {
           variant="outlined"
           value={cantidad}
           onChange={handleChangeCantidad}
+          disabled={cargando}
           sx={{ mb: 2 }}
         />
 
         {/* toLocaleString es para formatear el número según la configuración regional */}
         <Typography variant="h5" align="center" sx={{ mt: 2 }}>
-          {cantidad
-            ? `Resultado: ${resultado.toLocaleString('es-HN', { minimumFractionDigits: 2 })} ${
+          {cargando ? (
+            "Cargando tasa de cambio..."
+          ) : cantidad ? (
+            `Resultado: ${resultado.toLocaleString('es-HN', { minimumFractionDigits: 2 })} ${
                 modo === "usdToLps" ? "Lps" : "USD"
               }`
-            : "Ingrese una cantidad"}
+          ) : (
+            "Ingrese una cantidad"
+          )}
         </Typography>
 
         <Typography color="text.secondary" align="center" sx={{ mt: 1 }}>
-          Tipo de cambio: 1 USD = {valorDolar} Lps
+          {cargando ? (
+            "Actualizando..."
+          ) : modo === "usdToLps" ? (
+            `Tipo de cambio: 1 USD = ${tasaCambio.toFixed(4)} Lps`
+          ) : (
+            `Tipo de cambio: 1 Lps = ${tasaCambio.toFixed(6)} USD`
+          )}
         </Typography>
       </CardContent>
     </Card>
