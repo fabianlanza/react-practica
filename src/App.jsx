@@ -9,6 +9,7 @@ import { Routes } from 'react-router'
 import { Link } from 'react-router' 
 import { Productos } from './pages/Productos'
 import { Inicio } from './pages/Inicio'
+import Divisa from './pages/Divisa'
 
 
 
@@ -18,6 +19,7 @@ function App() {
 
     return (
       <>
+      {/* Navbar */}
         <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
           <div className="container-fluid">
             <a className="navbar-brand" href="#">Navbar</a>
@@ -27,6 +29,7 @@ function App() {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
                 <Link className="nav-link" to={"/"}>Inicio</Link>
+                <Link className="nav-link" to={"/divisa"}>Divisa</Link>
                 <Link className="nav-link" to={"/clientes"}>Clientes</Link>
                 <Link className="nav-link" to={"/productos"}>Productos</Link>
                 <Link className="nav-link" to={"/acercade"}>Acerca de</Link>
@@ -35,9 +38,10 @@ function App() {
           </div>
         </nav>
 
-
+      {/* Rutas */}
         <Routes>
           <Route path = '/' element = {<Inicio />}/>
+          <Route path = '/divisa' element = {<Divisa />}/>
           <Route path = '/clientes' element = {<Usuarios /> }/>
           <Route path = '/productos' element = {<Productos /> }/>
         </Routes>
