@@ -67,3 +67,5 @@ export function Tiempo(){
         </div>
     )
 }
+
+export default Tiempo;

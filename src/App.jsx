@@ -10,6 +10,7 @@ import { Link, useLocation } from 'react-router'
 import { Productos } from './pages/Productos'
 import { Inicio } from './pages/Inicio'
 import Divisa from './pages/Divisa'
+import { Clima } from './pages/Clima'
 
 
 
@@ -37,6 +38,9 @@ function App() {
                 <Link className={`nav-link ${location.pathname === '/divisa' ? 'active' : ''}`} to={"/divisa"}>
                   Divisa
                 </Link>
+                <Link className={`nav-link ${location.pathname === '/clima' ? 'active' : ''}`} to={"/clima"}>
+                  Clima
+                </Link>
                 <Link className={`nav-link ${location.pathname === '/clientes' ? 'active' : ''}`} to={"/clientes"}>
                   Clientes
                 </Link>
@@ -56,6 +60,7 @@ function App() {
           <Routes location={location}>
             <Route path = '/' element = {<Inicio />}/>
             <Route path = '/divisa' element = {<Divisa />}/>
+            <Route path = '/clima' element = {<Clima />}/>
             <Route path = '/clientes' element = {<Usuarios /> }/>
             <Route path = '/productos' element = {<Productos /> }/>
           </Routes>
