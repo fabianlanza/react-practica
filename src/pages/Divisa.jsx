@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, Typography, TextField, MenuItem } from "@mui/material";
+import { 
+  Card, 
+  CardContent, 
+  Typography, 
+  TextField, 
+  MenuItem,
+  Box,
+  Container,
+  Paper,
+  Divider,
+  Chip,
+  CircularProgress
+} from "@mui/material";
 
 export default function Divisa() {
   const [cantidad, setCantidad] = useState(""); //Lo que el usuario ingresa
@@ -69,58 +81,155 @@ export default function Divisa() {
   };
 
   return (
-    <Card sx={{ maxWidth: 450, mx: "auto", mt: 5, p: 2, borderRadius: 5, boxShadow: 5 }}>
-      <CardContent>
-        <Typography variant="h4" align="center" gutterBottom>
-          Conversor de Divisa
-        </Typography>
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Paper 
+        elevation={8}
+        sx={{ 
+          borderRadius: 4,
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        }}
+      >
+        {/* Header con gradiente */}
+        <Box sx={{ p: 3, textAlign: 'center', color: 'white' }}>
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
+           💵 Conversor de Divisas
+          </Typography>
+          <Typography variant="body2" sx={{ opacity: 0.9 }}>
+            Tipos de cambio actualizados en tiempo real
+          </Typography>
+        </Box>
 
-        <TextField
-          select
-          label="Tipo de conversión"
-          value={modo}
-          onChange={handleChangeModo}
-          fullWidth
-          sx={{ mb: 2 }}
-        >
-          <MenuItem value="usdToLps">Dólares → Lempiras</MenuItem>
-          <MenuItem value="lpsToUsd">Lempiras → Dólares</MenuItem>
-        </TextField>
+        {/* Contenido principal */}
+        <CardContent sx={{ bgcolor: 'white', p: 4 }}>
+          {/* Selector de tipo de conversión */}
+          <TextField
+            select
+            label="Tipo de conversión"
+            value={modo}
+            onChange={handleChangeModo}
+            fullWidth
+            variant="outlined"
+            sx={{ 
+              mb: 3,
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 2,
+              }
+            }}
+          >
+            <MenuItem value="usdToLps">Dólares → Lempiras</MenuItem>
+            <MenuItem value="lpsToUsd">Lempiras → Dólares</MenuItem>
+          </TextField>
 
-        <TextField
-          label="Cantidad"
-          type="number"
-          fullWidth
-          variant="outlined"
-          value={cantidad}
-          onChange={handleChangeCantidad}
-          disabled={cargando}
-          sx={{ mb: 2 }}
-        />
+          {/* Campo de cantidad */}
+          <TextField
+            label={modo === "usdToLps" ? "Cantidad en USD" : "Cantidad en HNL"}
+            type="number"
+            fullWidth
+            variant="outlined"
+            value={cantidad}
+            onChange={handleChangeCantidad}
+            disabled={cargando}
+            placeholder="0.00"
+            sx={{ 
+              mb: 3,
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 2,
+                fontSize: '1.2rem',
+              }
+            }}
+            InputProps={{
+              startAdornment: (
+                <Typography sx={{ mr: 1, color: 'text.secondary', fontWeight: 'bold' }}>
+                  {modo === "usdToLps" ? "$" : "L"}
+                </Typography>
+              ),
+            }}
+          />
 
-        {/* toLocaleString es para formatear el número según la configuración regional */}
-        <Typography variant="h5" align="center" sx={{ mt: 2 }}>
-          {cargando ? (
-            "Cargando tasa de cambio..."
-          ) : cantidad ? (
-            `Resultado: ${resultado.toLocaleString('es-HN', { minimumFractionDigits: 2 })} ${
-                modo === "usdToLps" ? "Lps" : "USD"
-              }`
-          ) : (
-            "Ingrese una cantidad"
-          )}
-        </Typography>
+          <Divider sx={{ my: 3 }}>
+            <Chip 
+              label="Resultado" 
+              color="primary" 
+              sx={{ fontWeight: 'bold' }}
+            />
+          </Divider>
 
-        <Typography color="text.secondary" align="center" sx={{ mt: 1 }}>
-          {cargando ? (
-            "Actualizando..."
-          ) : modo === "usdToLps" ? (
-            `Tipo de cambio: 1 USD = ${tasaCambio.toFixed(4)} Lps`
-          ) : (
-            `Tipo de cambio: 1 Lps = ${tasaCambio.toFixed(6)} USD`
-          )}
-        </Typography>
-      </CardContent>
-    </Card>
+          {/* Resultado */}
+          <Box 
+            sx={{ 
+              bgcolor: 'grey.50', 
+              p: 3, 
+              borderRadius: 3,
+              textAlign: 'center',
+              minHeight: '100px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              border: '2px solid',
+              borderColor: 'primary.light',
+            }}
+          >
+            {cargando ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+                <CircularProgress size={24} />
+                <Typography color="text.secondary">
+                  Cargando tasa de cambio...
+                </Typography>
+              </Box>
+            ) : cantidad ? (
+              <>
+                <Typography 
+                  variant="h4" 
+                  fontWeight="bold" 
+                  color="primary"
+                  sx={{ mb: 1 }}
+                >
+                  {modo === "usdToLps" ? "L " : "$ "}
+                  {resultado.toLocaleString('es-HN', { 
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2 
+                  })}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {modo === "usdToLps" ? "Lempiras" : "Dólares"}
+                </Typography>
+              </>
+            ) : (
+              <Typography color="text.secondary" variant="h6">
+                Ingrese una cantidad
+              </Typography>
+            )}
+          </Box>
+
+          {/* Tasa de cambio */}
+          <Box sx={{ mt: 3, textAlign: 'center' }}>
+            <Typography 
+              variant="body2" 
+              color="text.secondary"
+              sx={{ 
+                bgcolor: 'grey.100', 
+                py: 1.5, 
+                px: 2, 
+                borderRadius: 2,
+                display: 'inline-block'
+              }}
+            >
+              {cargando ? (
+                "Actualizando..."
+              ) : modo === "usdToLps" ? (
+                <>
+                  📊 <strong>1 USD</strong> = <strong>{tasaCambio.toFixed(4)} HNL</strong>
+                </>
+              ) : (
+                <>
+                  📊 <strong>1 HNL</strong> = <strong>{tasaCambio.toFixed(6)} USD</strong>
+                </>
+              )}
+            </Typography>
+          </Box>
+        </CardContent>
+      </Paper>
+    </Container>
   );
 }

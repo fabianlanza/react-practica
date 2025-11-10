@@ -6,7 +6,7 @@ import { Usuarios } from './components/ListaUsuario'
 import { TarjetaUsuario } from './components/Card'
 import { Route } from 'react-router'
 import { Routes } from 'react-router'
-import { Link } from 'react-router' 
+import { Link, useLocation } from 'react-router' 
 import { Productos } from './pages/Productos'
 import { Inicio } from './pages/Inicio'
 import Divisa from './pages/Divisa'
@@ -15,6 +15,7 @@ import Divisa from './pages/Divisa'
 
 function App() {
   const [count, setCount] = useState(0)
+  const location = useLocation(); // Hook para detectar cambios de ruta
 
 
     return (
@@ -39,12 +40,14 @@ function App() {
         </nav>
 
       {/* Rutas */}
-        <Routes>
-          <Route path = '/' element = {<Inicio />}/>
-          <Route path = '/divisa' element = {<Divisa />}/>
-          <Route path = '/clientes' element = {<Usuarios /> }/>
-          <Route path = '/productos' element = {<Productos /> }/>
-        </Routes>
+        <div className="page-container" key={location.pathname}>
+          <Routes location={location}>
+            <Route path = '/' element = {<Inicio />}/>
+            <Route path = '/divisa' element = {<Divisa />}/>
+            <Route path = '/clientes' element = {<Usuarios /> }/>
+            <Route path = '/productos' element = {<Productos /> }/>
+          </Routes>
+        </div>
       </>
     )
   } 
