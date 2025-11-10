@@ -17,6 +17,17 @@ import { Clima } from './pages/Clima'
 function App() {
   const [count, setCount] = useState(0)
   const location = useLocation(); // Hook para detectar cambios de ruta
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
+  // Función para cerrar el navbar
+  const closeNavbar = () => {
+    setNavbarOpen(false);
+    // También colapsar usando Bootstrap
+    const navbarCollapse = document.getElementById('navbarNavAltMarkup');
+    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+      navbarCollapse.classList.remove('show');
+    }
+  };
 
 
     return (
@@ -32,22 +43,22 @@ function App() {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav ms-auto">
-                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to={"/"}>
+                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to={"/"} onClick={closeNavbar}>
                   Inicio
                 </Link>
-                <Link className={`nav-link ${location.pathname === '/divisa' ? 'active' : ''}`} to={"/divisa"}>
+                <Link className={`nav-link ${location.pathname === '/divisa' ? 'active' : ''}`} to={"/divisa"} onClick={closeNavbar}>
                   Divisa
                 </Link>
-                <Link className={`nav-link ${location.pathname === '/clima' ? 'active' : ''}`} to={"/clima"}>
+                <Link className={`nav-link ${location.pathname === '/clima' ? 'active' : ''}`} to={"/clima"} onClick={closeNavbar}>
                   Clima
                 </Link>
-                <Link className={`nav-link ${location.pathname === '/clientes' ? 'active' : ''}`} to={"/clientes"}>
+                <Link className={`nav-link ${location.pathname === '/clientes' ? 'active' : ''}`} to={"/clientes"} onClick={closeNavbar}>
                   Clientes
                 </Link>
-                <Link className={`nav-link ${location.pathname === '/productos' ? 'active' : ''}`} to={"/productos"}>
+                <Link className={`nav-link ${location.pathname === '/productos' ? 'active' : ''}`} to={"/productos"} onClick={closeNavbar}>
                   Productos
                 </Link>
-                <Link className={`nav-link ${location.pathname === '/acercade' ? 'active' : ''}`} to={"/acercade"}>
+                <Link className={`nav-link ${location.pathname === '/acercade' ? 'active' : ''}`} to={"/acercade"} onClick={closeNavbar}>
                   Acerca de
                 </Link>
               </div>

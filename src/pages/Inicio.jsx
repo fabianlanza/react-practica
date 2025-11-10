@@ -5,6 +5,7 @@ import { Container, Grid, Card, CardContent, Typography, Box } from "@mui/materi
 
 export function Inicio() {
     const textos = [
+        "Fabian Lanza",
         "Desarrollador Web",
         "Creador de Soluciones",
         "Estudiante de Programación",
