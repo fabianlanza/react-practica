@@ -21,19 +21,31 @@ function App() {
     return (
       <>
       {/* Navbar */}
-        <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
+        <nav className="navbar navbar-expand-lg fixed-top custom-navbar">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">Navbar</a>
+            <Link to="/" className="navbar-brand fw-bold">
+              🚀 Mi Portafolio
+            </Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div className="navbar-nav">
-                <Link className="nav-link" to={"/"}>Inicio</Link>
-                <Link className="nav-link" to={"/divisa"}>Divisa</Link>
-                <Link className="nav-link" to={"/clientes"}>Clientes</Link>
-                <Link className="nav-link" to={"/productos"}>Productos</Link>
-                <Link className="nav-link" to={"/acercade"}>Acerca de</Link>
+              <div className="navbar-nav ms-auto">
+                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to={"/"}>
+                  Inicio
+                </Link>
+                <Link className={`nav-link ${location.pathname === '/divisa' ? 'active' : ''}`} to={"/divisa"}>
+                  Divisa
+                </Link>
+                <Link className={`nav-link ${location.pathname === '/clientes' ? 'active' : ''}`} to={"/clientes"}>
+                  Clientes
+                </Link>
+                <Link className={`nav-link ${location.pathname === '/productos' ? 'active' : ''}`} to={"/productos"}>
+                  Productos
+                </Link>
+                <Link className={`nav-link ${location.pathname === '/acercade' ? 'active' : ''}`} to={"/acercade"}>
+                  Acerca de
+                </Link>
               </div>
             </div>
           </div>
