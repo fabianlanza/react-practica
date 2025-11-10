@@ -25,7 +25,7 @@ export default function Divisa() {
         
         if (datos.result === "success") {
           setTasaCambio(datos.conversion_rate);
-          
+          console.log("Tasa de cambio obtenida:", datos.conversion_rate);
           // Reconvertir si ya hay una cantidad ingresada
           const numero = parseFloat(cantidad);
           if (!isNaN(numero) && numero > 0) {
