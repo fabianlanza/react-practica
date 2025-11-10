@@ -90,7 +90,7 @@ export function Inicio() {
                 {/* Cards de secciones */}
                 <Grid container spacing={3}>
                     {secciones.map((seccion, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
+                        <Grid key={index}>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
